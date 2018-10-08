@@ -1,0 +1,51 @@
+﻿@model CXCConsultant.Customer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerCreditLimit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerCreditLimit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerStatus)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerID }) |
+    @Html.ActionLink("Volver", "Index")
+</p>

@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ReceivableAccountsModelStoreContainer" CdmEntityContainer="ReceivableAccountsEntities">
+    <EntitySetMapping Name="AccountingSeat">
+      <EntityTypeMapping TypeName="ReceivableAccountsModel.AccountingSeat">
+        <MappingFragment StoreEntitySet="AccountingSeat">
+          <ScalarProperty Name="AccountingSeatID" ColumnName="AccountingSeatID" />
+          <ScalarProperty Name="SuplierID" ColumnName="SuplierID" />
+          <ScalarProperty Name="DocTypeID" ColumnName="DocTypeID" />
+          <ScalarProperty Name="AccountingSeatDate" ColumnName="AccountingSeatDate" />
+          <ScalarProperty Name="AccountingSeatAmount" ColumnName="AccountingSeatAmount" />
+          <ScalarProperty Name="AccountingSeatStatus" ColumnName="AccountingSeatStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customer">
+      <EntityTypeMapping TypeName="ReceivableAccountsModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="CustomerIC" ColumnName="CustomerIC" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="CustomerCreditLimit" ColumnName="CustomerCreditLimit" />
+          <ScalarProperty Name="CustomerStatus" ColumnName="CustomerStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DocType">
+      <EntityTypeMapping TypeName="ReceivableAccountsModel.DocType">
+        <MappingFragment StoreEntitySet="DocType">
+          <ScalarProperty Name="DocTypeCountableAccount" ColumnName="DocTypeCountableAccount" />
+          <ScalarProperty Name="DocTypeID" ColumnName="DocTypeID" />
+          <ScalarProperty Name="DocTypeDescription" ColumnName="DocTypeDescription" />
+          <ScalarProperty Name="DocTypeStatus" ColumnName="DocTypeStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Supplier">
+      <EntityTypeMapping TypeName="ReceivableAccountsModel.Supplier">
+        <MappingFragment StoreEntitySet="Supplier">
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+          <ScalarProperty Name="SupplierStatus" ColumnName="SupplierStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transaction">
+      <EntityTypeMapping TypeName="ReceivableAccountsModel.Transaction">
+        <MappingFragment StoreEntitySet="Transaction">
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+          <ScalarProperty Name="TransactionMovementType" ColumnName="TransactionMovementType" />
+          <ScalarProperty Name="DocTypeID" ColumnName="DocTypeID" />
+          <ScalarProperty Name="TransactionDocID" ColumnName="TransactionDocID" />
+          <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="TransactionAmount" ColumnName="TransactionAmount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Credit">
+      <EntityTypeMapping TypeName="ReceivableAccountsModel.Credit">
+        <MappingFragment StoreEntitySet="Credit">
+          <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
+          <ScalarProperty Name="CreditBalanceAverage" ColumnName="CreditBalanceAverage" />
+          <ScalarProperty Name="CreditCutOffDay" ColumnName="CreditCutOffDay" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="CreditID" ColumnName="CreditID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

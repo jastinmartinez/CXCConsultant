@@ -1,0 +1,59 @@
+﻿@model CXCConsultant.AccountingSeat
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AccountingSeat</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountingSeatDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountingSeatDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountingSeatAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountingSeatAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountingSeatStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountingSeatStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DocType.DocTypeDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DocType.DocTypeDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Supplier.SupplierName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Supplier.SupplierName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AccountingSeatID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ReceivableAccountsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccountingSeat">
+          <Key>
+            <PropertyRef Name="AccountingSeatID" />
+          </Key>
+          <Property Name="AccountingSeatID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SuplierID" Type="int" Nullable="false" />
+          <Property Name="DocTypeID" Type="int" Nullable="false" />
+          <Property Name="AccountingSeatDate" Type="date" Nullable="false" />
+          <Property Name="AccountingSeatAmount" Type="money" Nullable="false" />
+          <Property Name="AccountingSeatStatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Credit">
+          <Key>
+            <PropertyRef Name="CreditID" />
+          </Key>
+          <Property Name="CreditID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="CreditCutOffDay" Type="date" Nullable="false" />
+          <Property Name="CreditBalanceAverage" Type="money" Nullable="false" />
+          <Property Name="CreditAmount" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerIC" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="CustomerCreditLimit" Type="money" Nullable="false" />
+          <Property Name="CustomerStatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocType">
+          <Key>
+            <PropertyRef Name="DocTypeID" />
+          </Key>
+          <Property Name="DocTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DocTypeDescription" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="DocTypeCountableAccount" Type="int" Nullable="false" />
+          <Property Name="DocTypeStatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="SupplierID" />
+          </Key>
+          <Property Name="SupplierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="SupplierStatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="int" Nullable="false" />
+          <Property Name="TransactionMovementType" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="DocTypeID" Type="int" Nullable="false" />
+          <Property Name="TransactionDocID" Type="int" Nullable="false" />
+          <Property Name="TransactionDate" Type="date" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="TransactionAmount" Type="money" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AccountingSeat_DocType">
+          <End Role="DocType" Type="Self.DocType" Multiplicity="1" />
+          <End Role="AccountingSeat" Type="Self.AccountingSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocType">
+              <PropertyRef Name="DocTypeID" />
+            </Principal>
+            <Dependent Role="AccountingSeat">
+              <PropertyRef Name="DocTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountingSeat_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="AccountingSeat" Type="Self.AccountingSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="AccountingSeat">
+              <PropertyRef Name="SuplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Credit_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Credit" Type="Self.Credit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Credit">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_DocType">
+          <End Role="DocType" Type="Self.DocType" Multiplicity="1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocType">
+              <PropertyRef Name="DocTypeID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="DocTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ReceivableAccountsModelStoreContainer">
+          <EntitySet Name="AccountingSeat" EntityType="Self.AccountingSeat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Credit" EntityType="Self.Credit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocType" EntityType="Self.DocType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AccountingSeat_DocType" Association="Self.FK_AccountingSeat_DocType">
+            <End Role="DocType" EntitySet="DocType" />
+            <End Role="AccountingSeat" EntitySet="AccountingSeat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountingSeat_Supplier" Association="Self.FK_AccountingSeat_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="AccountingSeat" EntitySet="AccountingSeat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Credit_Customer" Association="Self.FK_Credit_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Credit" EntitySet="Credit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_Customer" Association="Self.FK_Transaction_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_DocType" Association="Self.FK_Transaction_DocType">
+            <End Role="DocType" EntitySet="DocType" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ReceivableAccountsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AccountingSeat">
+          <Key>
+            <PropertyRef Name="AccountingSeatID" />
+          </Key>
+          <Property Name="AccountingSeatID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SuplierID" Type="Int32" Nullable="false" />
+          <Property Name="DocTypeID" Type="Int32" Nullable="false" />
+          <Property Name="AccountingSeatDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AccountingSeatAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="AccountingSeatStatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DocType" Relationship="Self.FK_AccountingSeat_DocType" FromRole="AccountingSeat" ToRole="DocType" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_AccountingSeat_Supplier" FromRole="AccountingSeat" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerIC" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerCreditLimit" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="CustomerStatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Transaction" Relationship="Self.FK_Transaction_Customer" FromRole="Customer" ToRole="Transaction" />
+          <NavigationProperty Name="Credit" Relationship="ReceivableAccountsModel.FK_Credit_Customer" FromRole="Customer" ToRole="Credit" />
+        </EntityType>
+        <EntityType Name="DocType">
+          <Key>
+            <PropertyRef Name="DocTypeID" />
+          </Key>
+          <Property Name="DocTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DocTypeDescription" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DocTypeStatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AccountingSeat" Relationship="Self.FK_AccountingSeat_DocType" FromRole="DocType" ToRole="AccountingSeat" />
+          <NavigationProperty Name="Transaction" Relationship="Self.FK_Transaction_DocType" FromRole="DocType" ToRole="Transaction" />
+          <Property Name="DocTypeCountableAccount" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="SupplierID" />
+          </Key>
+          <Property Name="SupplierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SupplierStatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AccountingSeat" Relationship="Self.FK_AccountingSeat_Supplier" FromRole="Supplier" ToRole="AccountingSeat" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="Int32" Nullable="false" />
+          <Property Name="TransactionMovementType" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DocTypeID" Type="Int32" Nullable="false" />
+          <Property Name="TransactionDocID" Type="Int32" Nullable="false" />
+          <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="TransactionAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Transaction_Customer" FromRole="Transaction" ToRole="Customer" />
+          <NavigationProperty Name="DocType" Relationship="Self.FK_Transaction_DocType" FromRole="Transaction" ToRole="DocType" />
+        </EntityType>
+        <Association Name="FK_AccountingSeat_DocType">
+          <End Role="DocType" Type="Self.DocType" Multiplicity="1" />
+          <End Role="AccountingSeat" Type="Self.AccountingSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocType">
+              <PropertyRef Name="DocTypeID" />
+            </Principal>
+            <Dependent Role="AccountingSeat">
+              <PropertyRef Name="DocTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountingSeat_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="AccountingSeat" Type="Self.AccountingSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="AccountingSeat">
+              <PropertyRef Name="SuplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_DocType">
+          <End Role="DocType" Type="Self.DocType" Multiplicity="1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocType">
+              <PropertyRef Name="DocTypeID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="DocTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ReceivableAccountsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccountingSeat" EntityType="Self.AccountingSeat" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" />
+          <EntitySet Name="DocType" EntityType="Self.DocType" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" />
+          <EntitySet Name="Transaction" EntityType="Self.Transaction" />
+          <AssociationSet Name="FK_AccountingSeat_DocType" Association="Self.FK_AccountingSeat_DocType">
+            <End Role="DocType" EntitySet="DocType" />
+            <End Role="AccountingSeat" EntitySet="AccountingSeat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountingSeat_Supplier" Association="Self.FK_AccountingSeat_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="AccountingSeat" EntitySet="AccountingSeat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_Customer" Association="Self.FK_Transaction_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_DocType" Association="Self.FK_Transaction_DocType">
+            <End Role="DocType" EntitySet="DocType" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <EntitySet Name="Credit" EntityType="ReceivableAccountsModel.Credit" />
+          <AssociationSet Name="FK_Credit_Customer" Association="ReceivableAccountsModel.FK_Credit_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Credit" EntitySet="Credit" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Credit">
+          <Key>
+            <PropertyRef Name="CreditID" />
+          </Key>
+          <Property Name="CreditID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="CreditCutOffDay" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreditBalanceAverage" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CreditAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Customer" Relationship="ReceivableAccountsModel.FK_Credit_Customer" FromRole="Credit" ToRole="Customer" />
+        </EntityType>
+        <Association Name="FK_Credit_Customer">
+          <End Type="ReceivableAccountsModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="ReceivableAccountsModel.Credit" Role="Credit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Credit">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ReceivableAccountsModelStoreContainer" CdmEntityContainer="ReceivableAccountsEntities">
+          <EntitySetMapping Name="AccountingSeat">
+            <EntityTypeMapping TypeName="ReceivableAccountsModel.AccountingSeat">
+              <MappingFragment StoreEntitySet="AccountingSeat">
+                <ScalarProperty Name="AccountingSeatID" ColumnName="AccountingSeatID" />
+                <ScalarProperty Name="SuplierID" ColumnName="SuplierID" />
+                <ScalarProperty Name="DocTypeID" ColumnName="DocTypeID" />
+                <ScalarProperty Name="AccountingSeatDate" ColumnName="AccountingSeatDate" />
+                <ScalarProperty Name="AccountingSeatAmount" ColumnName="AccountingSeatAmount" />
+                <ScalarProperty Name="AccountingSeatStatus" ColumnName="AccountingSeatStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customer">
+            <EntityTypeMapping TypeName="ReceivableAccountsModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerIC" ColumnName="CustomerIC" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerCreditLimit" ColumnName="CustomerCreditLimit" />
+                <ScalarProperty Name="CustomerStatus" ColumnName="CustomerStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocType">
+            <EntityTypeMapping TypeName="ReceivableAccountsModel.DocType">
+              <MappingFragment StoreEntitySet="DocType">
+                <ScalarProperty Name="DocTypeCountableAccount" ColumnName="DocTypeCountableAccount" />
+                <ScalarProperty Name="DocTypeID" ColumnName="DocTypeID" />
+                <ScalarProperty Name="DocTypeDescription" ColumnName="DocTypeDescription" />
+                <ScalarProperty Name="DocTypeStatus" ColumnName="DocTypeStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supplier">
+            <EntityTypeMapping TypeName="ReceivableAccountsModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="SupplierStatus" ColumnName="SupplierStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transaction">
+            <EntityTypeMapping TypeName="ReceivableAccountsModel.Transaction">
+              <MappingFragment StoreEntitySet="Transaction">
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="TransactionMovementType" ColumnName="TransactionMovementType" />
+                <ScalarProperty Name="DocTypeID" ColumnName="DocTypeID" />
+                <ScalarProperty Name="TransactionDocID" ColumnName="TransactionDocID" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="TransactionAmount" ColumnName="TransactionAmount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Credit">
+            <EntityTypeMapping TypeName="ReceivableAccountsModel.Credit">
+              <MappingFragment StoreEntitySet="Credit">
+                <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
+                <ScalarProperty Name="CreditBalanceAverage" ColumnName="CreditBalanceAverage" />
+                <ScalarProperty Name="CreditCutOffDay" ColumnName="CreditCutOffDay" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CreditID" ColumnName="CreditID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

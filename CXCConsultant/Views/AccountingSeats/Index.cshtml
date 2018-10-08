@@ -1,0 +1,58 @@
+﻿@model IEnumerable<CXCConsultant.AccountingSeat>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountingSeatDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountingSeatAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountingSeatStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DocType.DocTypeDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Supplier.SupplierName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountingSeatDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountingSeatAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountingSeatStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DocType.DocTypeDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Supplier.SupplierName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AccountingSeatID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AccountingSeatID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AccountingSeatID })
+        </td>
+    </tr>
+}
+
+</table>

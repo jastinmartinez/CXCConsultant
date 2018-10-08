@@ -1,0 +1,51 @@
+﻿@model CXCConsultant.Credit
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Credit</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CreditCutOffDay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreditCutOffDay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreditBalanceAverage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreditBalanceAverage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreditAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreditAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.CustomerIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.CustomerIC)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CreditID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
